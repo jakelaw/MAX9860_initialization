@@ -1,0 +1,28 @@
+Description of MAX9860 & NUCLEO-F429ZI wiring and communication
+
+
+WIRING:
+
+NUCLEO-F429ZI    MAX9860
+	PF0(SDA)		9(SDA)
+	PF1(SCL)		10(SCL)
+	PC9(MCO2)		14(MCLK)
+	
+COMMUNICATION:
+
+I decided to use I2C to communicate between the twwo chips. This is required
+so that all of the registers in the MAX9860 and be initialized according to our needs.
+
+All the information was found in the following datasheets, mostly the reference manual(last one)
+	http://datasheets.maximintegrated.com/en/ds/MAX9860.pdf
+	http://www.st.com/content/ccc/resource/technical/document/datasheet/03/b4/b2/36/4c/72/49/29/DM00071990.pdf/files/DM00071990.pdf/jcr:content/translations/en.DM00071990.pdf
+	http://www.st.com/content/ccc/resource/technical/document/reference_manual/3d/6d/5a/66/b4/99/40/d4/DM00031020.pdf/files/DM00031020.pdf/jcr:content/translations/en.DM00031020.pdf
+
+	FIRMWARE:
+	
+	The firmware consists of two functions and a main. One function is to initialize the I2C registers in the ARM processor so that it 
+	is working as a master transmitter, and another to send two bytes of data at a time.
+	
+	All registers that are set on the MAX9860 are set to values that I believe would work for a general purpose. Microphone support was not initialized,
+	but this can be easily changed by editing appropriate registers. The program only needs to be run once, and the registers
+	will maintain their values after shutdown on the MAX9860.
